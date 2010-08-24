@@ -1,3 +1,5 @@
+/**
+ */
 var Web20Alert = function(argName) {
 
 	var box = new Array();
