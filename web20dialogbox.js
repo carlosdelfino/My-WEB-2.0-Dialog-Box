@@ -441,7 +441,7 @@ var Web20Confirm = function(argName) {
 	 * @param elm
 	 */
 	Web20Confirm.prototype.close = function(elm) {
-		if (elm.id == 'buttonConfirm') {
+		if (elm && elm.id == 'buttonConfirm') {
 			that.result = true;
 			// } else if (elm.id == 'buttonCancel') {
 			// this.result = false;
