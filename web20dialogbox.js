@@ -22,10 +22,6 @@ var Web20DialogsBoxVersion = {
 		},
 		colaborators : {
 			1 : {
-				name : "Aniele Gomes",
-				email : "aniele@gmail.com"
-			},
-			2 : {
 				name : "Carlos Magno Guerra",
 				email : "correio@carlosguerra.com.br"
 			}
