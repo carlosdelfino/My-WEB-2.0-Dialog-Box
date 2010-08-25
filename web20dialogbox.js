@@ -14,7 +14,7 @@
  */
 var Web20DialogsBoxVersion = {
 	version : 0.1,
-	build : 000020,
+	build : 000024,
 	authors : {
 		creator : {
 			name : "Carlos Delfino",
@@ -74,24 +74,23 @@ var WDBH = Web20DialogBoxHelper;
  * @param argName
  */
 var Web20Dialog = function(argName) {
-
 	var that = this;
+	var name;
+	var box = $extend( {}, SqueezeBox);
 
-	var box = new Array();
-	$extend(box, SqueezeBox);
-
-	var name = argName;
-
-	if (!Web20Dialog.instance) {
-		Web20Dialog.instance = new Hash();
+	if (!$chk(Web20Dialog.instances)) {
+		Web20Dialog.instances = new Hash();
 	}
-	// analyze use of $chk from mootools
-	if (!Web20Dialog.count >= 0) {
+	if (!$chk(Web20Dialog.count)) {
 		Web20Dialog.count = 0;
 	}
-	if (!name || name == '') {
-		name = Web20Dialog.count++;
+
+	if (!argName || argName == '') {
+		name = "instance-" + Web20Dialog.count;
+	} else {
+		name = argName;
 	}
+	Web20Dialog.count++;
 
 	/**
 	 * Put the object on hash of instances with the name informed.
@@ -106,7 +105,7 @@ var Web20Dialog = function(argName) {
 	 * @returns
 	 */
 	Web20Dialog.set = function(name, obj) {
-		Web20Dialog.instance.set(name, obj);
+		Web20Dialog.instances.set(name, obj);
 	};
 
 	/**
@@ -118,7 +117,7 @@ var Web20Dialog = function(argName) {
 	 * @returns
 	 */
 	Web20Dialog.remove = function(name) {
-		Web20Dialog.instance.remove(name);
+		Web20Dialog.instances.remove(name);
 	};
 	/**
 	 * Returne a instance of object for give name.
@@ -132,7 +131,7 @@ var Web20Dialog = function(argName) {
 	 * @returns
 	 */
 	Web20Dialog.get = function(name) {
-		return Web20Dialog.instance.get(name);
+		return Web20Dialog.instances.get(name);
 	};
 	/**
 	 * 
@@ -188,17 +187,7 @@ var Web20Dialog = function(argName) {
 	 * @see Web20Dialog#show
 	 */
 	Web20Dialog.prototype.initialize = function(options) {
-		var newOnClose;
-		if (options && options.onClose) {
-			newOnClose = options.onClose;
-		}
 		params = $merge(params, options);
-
-		params.onClose = function() {
-			if (newOnClose)
-				newOnClose();
-			that.close();
-		};
 	};
 
 	Web20Dialog.prototype.show = function(argHtml, options) {
@@ -222,23 +211,24 @@ var Web20Dialog = function(argName) {
 };
 
 var Web20Alert = function(argName) {
-
 	var that = this;
+	var name;
+	var box = $extend( {}, SqueezeBox);
 
-	var box = new Array();
-	$extend(box, SqueezeBox);
-
-	var name = argName;
-
-	if (!Web20Alert.instance) {
-		Web20Alert.instance = new Hash();
+	if (!$chk(Web20Alert.instances)) {
+		Web20Alert.instances = new Hash();
 	}
-	if (!Web20Alert.count >= 0) {
+	if (!$chk(Web20Alert.count)) {
 		Web20Alert.count = 0;
 	}
-	if (!name || name == '') {
-		name = Web20Alert.count++;
+
+	if (!argName || argName == '') {
+		name = "instance-" + Web20Alert.count;
+	} else {
+		name = argName;
 	}
+	Web20Alert.count++;
+
 	/**
 	 * 
 	 * @param name
@@ -246,7 +236,7 @@ var Web20Alert = function(argName) {
 	 * @returns
 	 */
 	Web20Alert.set = function(name, obj) {
-		Web20Alert.instance.set(name, obj);
+		Web20Alert.instances.set(name, obj);
 	};
 	/**
 	 * 
@@ -254,7 +244,7 @@ var Web20Alert = function(argName) {
 	 * @returns
 	 */
 	Web20Alert.remove = function(name) {
-		Web20Alert.instance.remove(name);
+		Web20Alert.instances.remove(name);
 	};
 	/**
 	 * 
@@ -262,7 +252,7 @@ var Web20Alert = function(argName) {
 	 * @returns
 	 */
 	Web20Alert.get = function(name) {
-		return Web20Alert.instance.get(name);
+		return Web20Alert.instances.get(name);
 	};
 	/**
 	 * 
@@ -270,7 +260,8 @@ var Web20Alert = function(argName) {
 	 * @returns
 	 */
 	Web20Alert.close = function(name) {
-		Web20Alert.get(name).close();
+		var instance = Web20Alert.get(name);
+		instance.close();
 	};
 
 	Web20Alert.set(name, this);
@@ -293,6 +284,14 @@ var Web20Alert = function(argName) {
 
 	};
 
+	/**
+	 * Return the name of Instance;
+	 * 
+	 * @return String
+	 */
+	Web20Alert.prototype.getName = function() {
+		return name;
+	}
 	Web20Alert.prototype.initialize = function(options) {
 		var newOnClose;
 		if (options && options.onClose) {
@@ -331,23 +330,23 @@ var Web20Alert = function(argName) {
 };
 
 var Web20Confirm = function(argName) {
-
 	var that = this;
+	var name;
+	var box = $extend( {}, SqueezeBox);
 
-	var box = new Array();
-	$extend(box, SqueezeBox);
-
-	var name = argName;
-
-	if (!Web20Confirm.instance) {
-		Web20Confirm.instance = new Hash();
+	if (!Web20Confirm.instances) {
+		Web20Confirm.instances = new Hash();
 	}
-	if (!Web20Confirm.count >= 0) {
+	if (!$chk(Web20Confirm.count)) {
 		Web20Confirm.count = 0;
 	}
-	if (!name || name == '') {
-		name = Web20Confirm.count++;
+
+	if (!argName || argName == '') {
+		name = "instance-" + Web20Confirm.count;
+	} else {
+		name = argName;
 	}
+	Web20Confirm.count++;
 
 	/**
 	 * 
@@ -356,7 +355,7 @@ var Web20Confirm = function(argName) {
 	 * @returns
 	 */
 	Web20Confirm.set = function(name, obj) {
-		Web20Confirm.instance.set(name, obj);
+		Web20Confirm.instances.set(name, obj);
 	};
 	/**
 	 * 
@@ -364,7 +363,7 @@ var Web20Confirm = function(argName) {
 	 * @returns
 	 */
 	Web20Confirm.remove = function(name) {
-		Web20Confirm.instance.remove(name);
+		Web20Confirm.instances.remove(name);
 	};
 	/**
 	 * 
@@ -372,7 +371,7 @@ var Web20Confirm = function(argName) {
 	 * @returns
 	 */
 	Web20Confirm.get = function(name) {
-		return Web20Confirm.instance.get(name);
+		return Web20Confirm.instances.get(name);
 	};
 	/**
 	 * 
@@ -413,7 +412,6 @@ var Web20Confirm = function(argName) {
 		params.onClose = function() {
 			if (newOnClose)
 				newOnClose();
-			that.close();
 		};
 	};
 	Web20Confirm.prototype.show = function(argHtml, options) {
