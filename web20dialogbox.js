@@ -14,7 +14,7 @@
  */
 var Web20DialogsBoxVersion = {
 	version : 0.1,
-	build : 000024,
+	build : 000022,
 	authors : {
 		creator : {
 			name : "Carlos Delfino",
@@ -51,12 +51,44 @@ var Web20DialogsBoxVersion = {
 		}
 	}
 };
+
 /**
+ * Usado para auxiliar a guardar propriedades entre chamadas de caixa de dialogo.
  * 
  * @returns
  */
-var Web20DialogBoxHelper = function() {
+var Web20DialogBoxHelper = {
 
+	dialogs : new Hash(),
+
+	getDialog : function(dialogName) {
+		var dialog = this.dialogs.get(dialogName);
+		return dialog;
+	},
+
+	setDialog : function(dialogName, dialog) {
+		this.dialogs.set(dialogName,dialog); 
+	},
+	
+	getProperty : function(dialogName, key) {
+		var dialogs = this.getDialog(dialogName);
+		var value;
+		if ($chk(dialogs))
+			value = dialogs.get(key);
+
+		return value;
+	},
+
+	setProperty : function(dialogName, key, value) {
+		var dialog = this.getDialog(dialogName);
+		if (!$chk(dialog)) {
+			dialog = new Hash();
+			this.setDialog(dialogName, dialog);
+		}
+		var result = dialog.set(key, value);
+		dialog.set(key, value);
+		return result;
+	}
 };
 
 var WDBH = Web20DialogBoxHelper;
